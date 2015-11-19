@@ -991,9 +991,11 @@ public final class GUI extends javax.swing.JFrame {
                         jLabel1.getHeight(),
                         Image.SCALE_SMOOTH));
         }
+        
         prosess.HorizontalCovered();
         prosess.VerticalCovered();
         prosess.updateTotalAverageCoverage();
+        
         HSVmat.setImage(
                 matToBuffered.toBufferedImage(
                         findROI.getHsvMat()).getScaledInstance(

@@ -6,6 +6,7 @@ import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 import java.awt.Color;
 import java.awt.Font;
+import static java.nio.file.Files.size;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.IntervalMarker;
@@ -19,6 +20,7 @@ import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.TextAnchor;
 import static org.opencv.core.Core.inRange;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 
 
 /**
@@ -62,11 +64,12 @@ public class ImageProcessing {
      * @param mat
      * @return
      */
-    public Mat adaptThresholdGaussian(Mat mat) {
-        Mat thresh = new Mat();
-        Imgproc.adaptiveThreshold(mat, thresh, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 15, -1);
-        return thresh;
-
+    public void adaptThresholdGaussian() {
+        Imgproc.cvtColor(lastImage, lastImage, Imgproc.COLOR_BGR2GRAY);
+        Imgproc.adaptiveThreshold(lastImage, lastImage, 1, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 10, -1); //funker ikke
+    }
+    public void gaussFilter(){
+        Imgproc.GaussianBlur(lastImage, lastImage, new Size(15,15), 3);
     }
 
     /**
@@ -193,6 +196,11 @@ public class ImageProcessing {
         System.out.println(STDDeviation.size());
         return STDDeviation;
     }
+    /**
+     * 
+     * @param lowerB
+     * @param higherB 
+     */
 
     public void hsvThreshold(Scalar lowerB, Scalar higherB) {
         Mat matHSV = new Mat();
